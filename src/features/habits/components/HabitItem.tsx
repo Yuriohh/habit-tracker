@@ -1,8 +1,9 @@
 import Checkbox from 'expo-checkbox';
 import { SymbolView } from 'expo-symbols';
 import React, { useCallback } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { colors, font, radius } from '../../../shared/theme';
+import { Text, TouchableOpacity, View } from 'react-native';
+import clsx from 'clsx';
+import { colors } from '../../../shared/theme';
 import { Habit } from '../../types/habits';
 
 type HabitItemProps = {
@@ -18,27 +19,26 @@ function HabitItemComponent({ habit, onToggle, onEdit, onDelete }: HabitItemProp
   const handleDelete = useCallback(() => onDelete(), [onDelete]);
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.habitToggle} onPress={handleToggle}>
+    <View className="flex-row justify-between items-center bg-card rounded-lg my-1 p-3">
+      <TouchableOpacity className="flex-row items-center" onPress={handleToggle}>
         <Checkbox
           value={habit.done}
           onValueChange={handleToggle}
-          style={styles.checkbox}
+          style={{ marginRight: 12, borderRadius: 6 }}
           color={habit.done ? colors.accent : colors.border}
         />
         <Text
-          style={[
-            styles.habitName,
-            {
-              textDecorationLine: habit.done ? 'line-through' : 'none',
-              color: habit.done ? colors.textMuted : colors.textPrimary,
-            },
-          ]}
+          className={clsx('text-base', {
+            'line-through text-textMuted': habit.done,
+            'text-textPrimary': !habit.done,
+          })}
+          accessibilityRole="checkbox"
+          accessibilityState={{ checked: habit.done }}
         >
           {habit.name}
         </Text>
       </TouchableOpacity>
-      <View style={styles.habitToggle}>
+      <View className="flex-row items-center">
         <TouchableOpacity onPress={handleEdit} accessibilityLabel="edit-habit">
           <SymbolView
             name={{ ios: 'pencil', android: 'edit' }}
@@ -60,26 +60,3 @@ function HabitItemComponent({ habit, onToggle, onEdit, onDelete }: HabitItemProp
 }
 
 export const HabitItem = React.memo(HabitItemComponent);
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 16,
-    backgroundColor: colors.card,
-    borderRadius: radius.md,
-    marginVertical: 4,
-    padding: 12,
-  },
-  checkbox: {
-    marginRight: 12,
-    borderRadius: radius.sm,
-  },
-  habitName: { fontSize: font.lg },
-  habitToggle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  delete: { color: 'red', fontSize: 16 },
-});

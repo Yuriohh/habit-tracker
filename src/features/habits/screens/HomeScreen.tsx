@@ -1,10 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useCallback, useMemo, useState } from 'react';
-import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
+import { Alert, FlatList, Text, View } from 'react-native';
 import { useShallow } from 'zustand/shallow';
 import { Button } from '../../../shared/components/Button';
-import { colors, font } from '../../../shared/theme';
 import { RootStackParamList } from '../../../shared/types/navigation';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { HabitItem } from '../components/HabitItem';
@@ -44,11 +43,11 @@ export function HomeScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerTitles}>
-          <Text style={styles.title}>Meus Hábitos</Text>
-          <Text style={styles.subtitle}>
+    <View className="flex-1 p-6 pt-[60px] bg-background">
+      <View className="flex-row justify-between items-center mb-6">
+        <View className="flex-col">
+          <Text className="text-2xl font-bold text-textPrimary">Meus Hábitos</Text>
+          <Text className="text-sm text-textPrimary mb-2">
             <Today /> - {done} de {total} Concluidos
           </Text>
         </View>
@@ -76,17 +75,3 @@ export function HomeScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, paddingTop: 60, backgroundColor: colors.background },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  headerTitles: { flexDirection: 'column' },
-  title: { fontSize: font.xxl, fontWeight: 'bold', color: colors.textPrimary },
-  subtitle: { fontSize: font.md, color: colors.textPrimary, marginBottom: 8 },
-  progress: { fontSize: 16, color: '#666', paddingBottom: 16 },
-});

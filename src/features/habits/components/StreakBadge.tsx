@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { colors, font, radius, spacing } from '../../../shared/theme';
+import { Text, View } from 'react-native';
 
 type StreakBadgeProps = {
   streak: number;
@@ -7,29 +6,9 @@ type StreakBadgeProps = {
 
 export function StreakBadge({ streak }: StreakBadgeProps) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.fire}>🔥</Text>
-      <Text style={styles.count}>{streak}</Text>
+    <View className="flex-row items-center bg-card rounded-lg px-3 py-1 gap-1">
+      <Text className="text-lg">🔥</Text>
+      <Text className="text-lg text-accent font-bold">{streak}</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.card,
-    borderRadius: radius.md,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs,
-    gap: spacing.xs,
-  },
-  fire: {
-    fontSize: font.xl,
-  },
-  count: {
-    fontSize: font.xl,
-    color: colors.accent,
-    fontWeight: 'bold',
-  },
-});
