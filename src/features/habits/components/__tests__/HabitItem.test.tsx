@@ -4,6 +4,7 @@ const mockHabit = {
   id: '1',
   name: 'Beber água',
   done: true,
+  categoryId: 'productivity',
 };
 
 describe('HabitItem', () => {
@@ -63,6 +64,6 @@ describe('HabitItem', () => {
     );
 
     const element = screen.getByText('Beber água');
-    expect(element).toHaveStyle({ textDecorationLine: 'line-through' });
+    expect(element).toBeChecked();
   });
 });

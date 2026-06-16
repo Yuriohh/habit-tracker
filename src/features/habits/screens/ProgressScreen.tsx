@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { colors, font } from '../../../shared/theme';
+import { Text, View } from 'react-native';
 import { ProgressBar } from '../components/ProgressBar';
 import { useHabitsStatus } from '../hooks/useHabitsStatus';
 import { Today } from '../components/Today';
@@ -21,31 +20,31 @@ export function ProgressScreen() {
 
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View className="flex-1 p-6 pt-[60px] bg-background">
+      <View className="flex-row justify-between items-center mb-1">
         <View>
           <Today size="large" />
-          <Text style={styles.title}>Progresso</Text>
+          <Text className="text-2xl text-white mb-3">Progresso</Text>
         </View>
         <StreakBadge streak={streak} />
       </View>
 
-      <View style={styles.card}>
+      <View className="flex-row items-center my-6 gap-4">
         <SmallCard label="Total" value={total} />
         <SmallCard label="Feitos" value={done} />
         <SmallCard label="Progresso" value={progress} progress />
       </View>
 
-      <View style={styles.habitsStatus}>
-        <Text style={styles.subtitle}>
+      <View className="flex-row justify-between mb-1">
+        <Text className="text-sm text-textSecondary">
           {done} de {total} Concluídos
         </Text>
-        <Text style={styles.progress}>{progress}%</Text>
+        <Text className="text-base text-accent">{progress}%</Text>
       </View>
 
       <ProgressBar progress={progress} />
 
-      <View style={styles.body}>
+      <View className="flex-1">
         <Card title="Habitos" habits={habits} />
       </View>
 
@@ -53,30 +52,3 @@ export function ProgressScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, paddingTop: 60, backgroundColor: colors.background },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 24,
-    gap: 16,
-  },
-  habitsStatus: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 4,
-  },
-  body: {
-    flex: 1,
-  },
-  title: { fontSize: font.xxl, color: 'white', marginBottom: 12 },
-  subtitle: { fontSize: font.md, color: colors.textSecondary },
-  progress: { fontSize: 16, color: colors.accent },
-});

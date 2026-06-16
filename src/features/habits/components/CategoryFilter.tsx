@@ -1,5 +1,4 @@
-import { StyleSheet, View } from 'react-native';
-import { spacing } from '../../../shared/theme';
+import { View } from 'react-native';
 import { CATEGORIES } from '../constants/categories';
 import { CategoryBadge } from './CategoryBadge';
 
@@ -10,7 +9,7 @@ type CategoryFilterProps = {
 
 export function CategoryFilter({ selectedCategoryId, onSelect }: CategoryFilterProps) {
   return (
-    <View style={styles.container}>
+    <View className="flex-row gap-2 mb-4">
       {CATEGORIES.map((category) => (
         <CategoryBadge
           key={category.id}
@@ -22,11 +21,3 @@ export function CategoryFilter({ selectedCategoryId, onSelect }: CategoryFilterP
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    marginBottom: spacing.lg,
-  },
-});

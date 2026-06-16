@@ -4,16 +4,16 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
   Text,
   TextInput,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { useShallow } from 'zustand/shallow';
+import clsx from 'clsx';
 import { Button } from '../../../shared/components/Button';
 import { RootStackParamList } from '../../../shared/types/navigation';
-import { colors, font, radius, spacing } from '../../../shared/theme';
+import { colors } from '../../../shared/theme';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { Today } from '../components/Today';
 import { DEFAULT_CATEGORY_ID } from '../constants/categories';
@@ -38,29 +38,32 @@ export function HabitFormScreen({ route }: Props) {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
+      className="flex-1"
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.inner}>
+        <View className="flex-1 justify-evenly p-6 pt-[60px] bg-background">
           <View>
             <Today size="large" />
-            <Text style={styles.title}>{habit ? 'Editar Hábito' : 'Adicionar Hábito'}</Text>
+            <Text className="text-lg text-white">{habit ? 'Editar Hábito' : 'Adicionar Hábito'}</Text>
           </View>
           <View>
-            <Text style={styles.label}>Nome do hábito</Text>
+            <Text className="text-sm text-textMuted mb-2">Nome do hábito</Text>
             <TextInput
               placeholder="Ex: Beber água, Meditar"
               value={name}
               onChangeText={setName}
-              style={[styles.input, name !== '' ? styles.inputFocused : styles.inputBlurred]}
+              className={clsx('bg-card p-4 rounded-lg text-textPrimary text-lg border-2', {
+                'border-accent': name !== '',
+                'border-border': name === '',
+              })}
               placeholderTextColor={colors.textMuted}
             />
           </View>
           <View>
-            <Text style={styles.label}>Categoria</Text>
+            <Text className="text-sm text-textMuted mb-2">Categoria</Text>
             <CategoryFilter selectedCategoryId={categoryId} onSelect={setCategoryId} />
           </View>
-          <View style={styles.footer}>
+          <View className="gap-y-5">
             <Button
               label="Salvar"
               onPress={() => {
@@ -84,34 +87,3 @@ export function HabitFormScreen({ route }: Props) {
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  inner: {
-    flex: 1,
-    justifyContent: 'space-evenly',
-    padding: 24,
-    paddingTop: 60,
-    backgroundColor: colors.background,
-  },
-  title: { fontSize: font.xl, color: 'white' },
-  label: { fontSize: font.md, color: colors.textMuted, marginBottom: 8 },
-  input: {
-    backgroundColor: colors.card,
-    padding: spacing.lg,
-    borderRadius: radius.md,
-    color: colors.textPrimary,
-    fontSize: font.xl,
-    borderColor: colors.border,
-    borderWidth: 2,
-  },
-  inputFocused: {
-    borderColor: colors.accent,
-  },
-  inputBlurred: {
-    borderColor: colors.border,
-  },
-  footer: { rowGap: 20 },
-});

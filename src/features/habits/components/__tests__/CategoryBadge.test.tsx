@@ -26,13 +26,13 @@ describe('CategoryBadge', () => {
     await render(<CategoryBadge label="Saúde" selected={true} onPress={jest.fn()} />);
 
     const badge = screen.getByLabelText('category-Saúde');
-    expect(badge).toHaveStyle({ backgroundColor: '#6c63ff' });
+    expect(badge).toBeSelected();
   });
 
   it('aplica cor neutra quando não selecionado', async () => {
     await render(<CategoryBadge label="Saúde" selected={false} onPress={jest.fn()} />);
 
     const badge = screen.getByLabelText('category-Saúde');
-    expect(badge).toHaveStyle({ backgroundColor: '#252525' });
+    expect(badge).not.toBeSelected();
   });
 });

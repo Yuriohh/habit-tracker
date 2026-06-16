@@ -1,44 +1,25 @@
 import { Text, View } from 'react-native';
 import { Habit } from '../../types/habits';
 import Checkbox from 'expo-checkbox';
-import { colors, radius } from '../../../shared/theme';
-import { StyleSheet } from 'react-native';
+import { colors } from '../../../shared/theme';
+import clsx from 'clsx';
 
 export function CardItem({ item }: { item: Habit }) {
   return (
-    <View style={styles.container}>
+    <View className="flex-row items-center my-1">
       <Checkbox
         value={item.done}
-        style={styles.checkbox}
+        style={{ marginRight: 12, borderRadius: 6 }}
         color={item.done ? colors.accent : colors.border}
       />
       <Text
-        style={[
-          styles.habitName,
-          {
-            textDecorationLine: item.done ? 'line-through' : 'none',
-            color: item.done ? colors.textMuted : colors.textPrimary,
-          },
-        ]}
+        className={clsx('text-base font-medium', {
+          'line-through text-textMuted': item.done,
+          'text-textPrimary': !item.done,
+        })}
       >
         {item.name}
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 4,
-  },
-  checkbox: {
-    marginRight: 12,
-    borderRadius: radius.sm,
-  },
-  habitName: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-});

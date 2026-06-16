@@ -1,3 +1,5 @@
+import './global.css';
+
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HabitFormScreen } from './src/features/habits/screens/HabitFormScreen';
