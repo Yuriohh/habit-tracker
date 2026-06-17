@@ -8,39 +8,20 @@ import { RootStackParamList } from '../../../shared/types/navigation';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { HabitItem } from '../components/HabitItem';
 import { Today } from '../components/Today';
-import { DEFAULT_CATEGORY_ID } from '../constants/categories';
-import { useHabit } from '../hooks/useHabits';
-import { useHabitsStatus } from '../hooks/useHabitsStatus';
-import { getHabitsByCategory } from '../utils/habitsCalculations';
+import { useHomeScreenViewModel } from '../hooks/useHomeScreenViewModel';
 
 export function HomeScreen() {
-  const { habits, toggleHabit, deleteHabit } = useHabit(
-    useShallow((state) => ({
-      habits: state.habits,
-      toggleHabit: state.toggleHabit,
-      deleteHabit: state.deleteHabit,
-    })),
-  );
-
-  const { total, done } = useHabitsStatus();
-  const [selectedCategoryId, setSelectedCategoryId] = useState(DEFAULT_CATEGORY_ID);
-
-  const filteredHabits = useMemo(
-    () => getHabitsByCategory(habits, selectedCategoryId),
-    [habits, selectedCategoryId],
-  );
+  const {
+    total,
+    done,
+    filteredHabits,
+    showDeleteAlert,
+    selectedCategoryId,
+    setSelectedCategoryId,
+    toggleHabit,
+  } = useHomeScreenViewModel();
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  const showDeleteAlert = useCallback(
-    (id: string) => {
-      return Alert.alert('Apagar Hábito', 'Tem certeza que deseja apagar este hábito?', [
-        { text: 'Cancelar', style: 'cancel' },
-        { text: 'Apagar', style: 'destructive', onPress: () => deleteHabit(id) },
-      ]);
-    },
-    [deleteHabit],
-  );
 
   return (
     <View className="flex-1 p-6 pt-[60px] bg-background">
